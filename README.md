@@ -13,36 +13,31 @@ VS Code extension for linting Handlebars templates in jsreport DOCX workflows. C
 
 ## Rules
 
-| Code | Severity | Description |
-|---------|----------|--------------------------------------------------|
-| HBS001 | error | Mismatched block closer |
-| HBS002 | error | Unclosed block helper |
-| HBS003 | warning | Unknown helper (not in registry) |
-| HBS004 | warning | Unknown sub-expression helper |
-| HBS005 | info | Field not found in data schema |
-| HBS006 | warning | `{{#each}}` on a non-array field |
-| HBS007 | warning | Child field doesn't exist on parent type |
-| DOCX001 | error | Expression split across `<w:r>` runs |
-| DOCX002 | warning | `<w:proofErr>` markup near expression |
-| DOCX003 | info | Revision tracking (rsid) near expression |
-| DOCX004 | info | Block helper spans table row boundaries |
+| Code    | Severity | Description                              |
+| ------- | -------- | ---------------------------------------- |
+| HBS001  | error    | Mismatched block closer                  |
+| HBS002  | error    | Unclosed block helper                    |
+| HBS003  | warning  | Unknown helper (not in registry)         |
+| HBS004  | warning  | Unknown sub-expression helper            |
+| HBS005  | info     | Field not found in data schema           |
+| HBS006  | warning  | `{{#each}}` on a non-array field         |
+| HBS007  | warning  | Child field doesn't exist on parent type |
+| DOCX001 | error    | Expression split across `<w:r>` runs     |
+| DOCX002 | warning  | `<w:proofErr>` markup near expression    |
+| DOCX003 | info     | Revision tracking (rsid) near expression |
+| DOCX004 | info     | Block helper spans table row boundaries  |
 
-## Getting Started
+## Install
 
-### Prerequisites
+Download the latest `.vsix` from this repo: [hbs-lint-vscode-0.1.0.vsix](hbs-lint-vscode-0.1.0.vsix)
 
-- VS Code 1.85+
-- Node.js 20+
+Then in VS Code: **Extensions** > **...** > **Install from VSIX** and select the downloaded file.
 
-### Install from Source
+Or install from the command line:
 
 ```bash
-npm install
-npm run compile
-npm run package
+code --install-extension hbs-lint-vscode-0.1.0.vsix
 ```
-
-Install the generated `.vsix` file: **Extensions** > **...** > **Install from VSIX**.
 
 ### Configuration
 
@@ -108,4 +103,4 @@ src/
 
 ## License
 
-Private — internal use only.
+TBD
