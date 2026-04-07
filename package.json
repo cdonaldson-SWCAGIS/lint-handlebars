@@ -1,0 +1,54 @@
+{
+  "name": "hbs-lint-vscode",
+  "displayName": "HBS Lint",
+  "description": "Linting for Handlebars templates in jsreport DOCX workflows",
+  "version": "0.1.0",
+  "publisher": "fdc",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Linters"
+  ],
+  "activationEvents": [
+    "onLanguage:handlebars",
+    "workspaceContains:**/.hbslintrc.json"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "hbs-lint.lintWorkspace",
+        "title": "hbs-lint: Lint Workspace"
+      },
+      {
+        "command": "hbs-lint.generateSchema",
+        "title": "hbs-lint: Generate Schema from JSON"
+      }
+    ],
+    "languages": [
+      {
+        "id": "handlebars",
+        "extensions": [
+          ".hbs",
+          ".handlebars"
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "test": "mocha ./out/test/**/*.test.js --recursive --timeout 10000",
+    "vscode:prepublish": "npm run compile",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^2.22.0",
+    "mocha": "^10.2.0",
+    "typescript": "^5.3.3"
+  }
+}

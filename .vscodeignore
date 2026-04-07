@@ -1,0 +1,13 @@
+src/**
+node_modules/**
+.vscode/**
+.vscode-test/**
+tsconfig.json
+**/*.test.js
+**/*.test.js.map
+**/*.test.d.ts
+src/test/**
+.gitignore
+CLAUDE.md
+SPECIFICATION.md
+.claude/**

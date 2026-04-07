@@ -1,0 +1,139 @@
+{{! ============================================================ }}
+{{! demo.hbs — Demonstrates all hbs-lint-vscode rules           }}
+{{! ============================================================ }}
+
+{{! ── CLEAN TEMPLATE (no diagnostics) ─────────────────────── }}
+
+<w:p>
+  <w:r><w:t>Site ID: {{siteId}}</w:t></w:r>
+</w:p>
+<w:p>
+  <w:r><w:t>Inspector: {{inspector}}</w:t></w:r>
+</w:p>
+{{#each samples}}
+<w:tr>
+  <w:tc><w:p><w:r><w:t>{{depth}}</w:t></w:r></w:p></w:tc>
+  <w:tc><w:p><w:r><w:t>{{colorCode}}</w:t></w:r></w:p></w:tc>
+  <w:tc><w:p><w:r><w:t>{{textureClass}}</w:t></w:r></w:p></w:tc>
+</w:tr>
+{{/each}}
+{{#with coordinates}}
+<w:p>
+  <w:r><w:t>Lat: {{latitude}}, Lon: {{longitude}}</w:t></w:r>
+</w:p>
+{{/with}}
+
+
+{{! ── HBS001: Mismatched block closer ────────────────────── }}
+
+{{#if hasFinds}}
+  <w:r><w:t>Finds present</w:t></w:r>
+{{/unless}}
+
+
+{{! ── HBS002: Unclosed block helper ──────────────────────── }}
+
+{{#each attachments}}
+<w:p>
+  <w:r><w:t>{{url}} — {{caption}}</w:t></w:r>
+</w:p>
+
+
+{{! ── HBS003: Unknown helper ─────────────────────────────── }}
+
+<w:r><w:t>{{formatCurrency totalCost}}</w:t></w:r>
+
+
+{{! ── HBS004: Unknown sub-expression helper ──────────────── }}
+
+<w:r><w:t>{{formatDate (toISO inspectionDate)}}</w:t></w:r>
+
+
+{{! ── HBS005: Field not found in data schema ─────────────── }}
+
+<w:r><w:t>Project: {{projectName}}</w:t></w:r>
+
+
+{{! ── HBS006: {{#each}} on a non-array field ─────────────── }}
+
+{{#each coordinates}}
+  <w:r><w:t>{{latitude}}</w:t></w:r>
+{{/each}}
+
+
+{{! ── HBS007: Child field doesn't exist on parent type ───── }}
+
+{{#each samples}}
+  <w:r><w:t>{{depth}} — {{location}}</w:t></w:r>
+{{/each}}
+
+
+{{! ── DOCX001: Expression split across <w:r> runs ────────── }}
+
+<w:r><w:rPr><w:lang w:val="en-US"/></w:rPr><w:t>{{site</w:t></w:r>
+<w:r><w:t>Id}}</w:t></w:r>
+
+
+{{! ── DOCX002: <w:proofErr> markup near expression ────────── }}
+
+<w:proofErr w:type="spellStart"/>
+<w:r><w:t>{{siteId}}</w:t></w:r>
+<w:proofErr w:type="spellEnd"/>
+
+
+{{! ── DOCX003: Revision tracking (rsid) near expression ──── }}
+
+<w:r w:rsidR="00A21F4B" w:rsidRPr="00B33E5C"><w:t>{{inspector}}</w:t></w:r>
+
+
+{{! ── DOCX004: Block helper spans table row boundaries ───── }}
+
+<w:tr>
+  <w:tc><w:p><w:r><w:t>{{#each samples}}</w:t></w:r></w:p></w:tc>
+</w:tr>
+<w:tr>
+  <w:tc><w:p><w:r><w:t>{{depth}}</w:t></w:r></w:p></w:tc>
+</w:tr>
+<w:tr>
+  <w:tc><w:p><w:r><w:t>{{/each}}</w:t></w:r></w:p></w:tc>
+</w:tr>
+
+
+{{! ── HBS008: Empty expression ───────────────────────────── }}
+
+{{}}
+{{  }}
+
+
+{{! ── HBS009: Orphaned block closer ─────────────────────── }}
+
+{{/with}}
+
+
+{{! ── HBS010: Unclosed expression ────────────────────────── }}
+
+{{ siteId
+
+
+{{! ── HBS011: Triple-stache raw output ──────────────────── }}
+
+{{{customHtml}}}
+
+
+{{! ── Block parameters (as |item|) ──────────────────────── }}
+
+{{#each samples as |sample index|}}
+  Sample {{index}}: {{sample.depth}}
+{{/each}}
+
+
+{{! ── Inline suppression examples ────────────────────────── }}
+
+{{! hbs-lint-disable DOCX001 }}
+<w:r><w:t>{{site</w:t></w:r><w:r><w:t>Id}}</w:t></w:r>
+
+{{! hbs-lint-disable-next-line HBS005 }}
+<w:r><w:t>{{legacyField}}</w:t></w:r>
+
+{{! hbs-lint-disable DOCX001 HBS003 }}
+<w:r><w:t>{{unknownHelper (split</w:t></w:r><w:r><w:t>Expr)}}</w:t></w:r>
